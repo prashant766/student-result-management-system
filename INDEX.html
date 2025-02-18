@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Result Management System</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7fc;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 900px;
+      padding: 30px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: #4CAF50;
+    }
+
+    .form-container {
+      display: grid;
+      gap: 15px;
+    }
+
+    .form-container input,
+    .form-container select,
+    .form-container button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .form-container input:focus,
+    .form-container select:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+
+    .form-container button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .form-container button:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    table th,
+    table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    table tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Student Result Management System</h1>
+    </div>
+
+    <div class="form-container">
+      <input type="text" id="studentName" placeholder="Enter Student Name" required />
+      <input type="number" id="studentRollNo" placeholder="Enter Roll Number" required />
+      <input type="number" id="marksMath" placeholder="Enter Marks in Math" required />
+      <input type="number" id="marksEnglish" placeholder="Enter Marks in English" required />
+      <input type="number" id="marksScience" placeholder="Enter Marks in Science" required />
+      
+      <button onclick="submitResult()">Submit Result</button>
+    </div>
+
+    <table id="resultTable">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Roll Number</th>
+          <th>Math Marks</th>
+          <th>English Marks</th>
+          <th>Science Marks</th>
+          <th>Total Marks</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="footer">
+      <p>&copy; 2025 Student Management System</p>
+    </div>
+  </div>
+
+  <script>
+    function submitResult() {
+      // Get values from input fields
+      const studentName = document.getElementById('studentName').value;
+      const studentRollNo = document.getElementById('studentRollNo').value;
+      const marksMath = parseInt(document.getElementById('marksMath').value);
+      const marksEnglish = parseInt(document.getElementById('marksEnglish').value);
+      const marksScience = parseInt(document.getElementById('marksScience').value);
+      
+      // Calculate total marks
+      const totalMarks = marksMath + marksEnglish + marksScience;
+      let status = totalMarks >= 150 ? 'Passed' : 'Failed';
+
+      // Validate input
+      if (isNaN(marksMath) || isNaN(marksEnglish) || isNaN(marksScience)) {
+        alert('Please enter valid marks.');
+        return;
+      }
+
+      if (studentName === '' || studentRollNo === '') {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      // Insert data into the result table
+      const table = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+      const newRow = table.insertRow();
+
+      newRow.insertCell(0).textContent = studentName;
+      newRow.insertCell(1).textContent = studentRollNo;
+      newRow.insertCell(2).textContent = marksMath;
+      newRow.insertCell(3).textContent = marksEnglish;
+      newRow.insertCell(4).textContent = marksScience;
+      newRow.insertCell(5).textContent = totalMarks;
+      newRow.insertCell(6).textContent = status;
+
+      // Reset form after submission
+      document.getElementById('studentName').value = '';
+      document.getElementById('studentRollNo').value = '';
+      document.getElementById('marksMath').value = '';
+      document.getElementById('marksEnglish').value = '';
+      document.getElementById('marksScience').value = '';
+    }
+  </script>
+
+</body>
+</html>
